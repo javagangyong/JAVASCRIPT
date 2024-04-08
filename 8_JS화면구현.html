@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #root {
+            display: flex;
+            max-width: 1100px;
+            margin: auto;
+        }
+        .item {
+            flex-wrap: wrap;
+            margin: 10px;
+            padding: 10px;
+            border: 1px solid black;
+
+        }
+    </style>
+</head>
+<body>
+    
+    <h1>JSON파일 내용 불러와서 화면에 출력하기</h1>
+    <hr>
+    <div id="root"></div>
+
+    <script src="homeplus(berry).js"></script>
+    <script>
+        console.log(arr)
+        const root = document.getElementById('root')
+
+        // 원하는 조건으로 정렬 (가격순으로 내림차순)
+        arr.sort((a, b) => b.price - a.price)
+
+        // 원하는 단어로 필터링 (검색어: 블루베리)
+        const arr2 = arr.filter(dto => dto.name.includes('딸기'))
+
+        // json데이터를 화면에 반영하는 코드
+        arr2.forEach(dto => {
+            let tag = ''
+            tag += `<div class="item">`
+            tag += `    <div class="name">${dto.name}</div>`
+            tag += `    <div class="price">${dto.price}</div>`
+            tag += `    <div class="salesCount">${dto.salesCount}</div>`
+            tag += `    <div class="grade">${dto.grade}</div>`
+            tag += `    <div class="reviewCount">${dto.reviewCount}</div>`
+            tag += `</div>`
+            root.innerHTML += tag
+        });
+    </script>
+
+</body>
+</html>

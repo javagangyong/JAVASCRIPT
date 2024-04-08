@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #root {
+            border: 2px solid black;
+            max-width: 1200px;
+            margin: auto;
+        }
+        .item {
+            display: flex;
+            border-bottom: 1px solid grey;
+        }
+        .item > div {
+            padding: 10px 20px;
+            flex: 2;
+        }
+        .columns {
+            background-color: #eee;
+            cursor: pointer;
+            user-select: none;  /* 사용자가 드래그로 글자 및 그림을 선택할 수 없음 */
+            position: sticky;
+            top: 0;
+        }
+        .item > div:nth-child(1) {
+            flex: 3;
+        }
+        .item > div:nth-child(2) {
+            flex: 3;
+        }
+    </style>
+</head>
+<body>
+    <div id="root">
+        <div class="columns item">
+            <div order="1" class="guNm">
+                <span class="text">주차장</span>
+                <span class="arrow"></span>
+            </div>
+            <div order="1" class="pkNam">
+                <span class="text">위치</span>
+                <span class="arrow"></span>
+            </div>
+            <div order="1" class="pkFm">
+                <span class="text">주차장유형</span>
+                <span class="arrow"></span>
+            </div>
+            <div order="1" class="pkCnt">
+                <span class="text">주차가능대수</span>
+                <span class="arrow"></span>
+            </div>
+            <div order="1" class="tenMin">
+                <span class="text">10분당 가격</span>
+                <span class="arrow"></span>
+            </div>
+            <div order="1" class="ftDay">
+                <span class="text">일주차 가격</span>
+                <span class="arrow"></span>
+            </div>
+            <div order="1" class="ftMon">
+                <span class="text">월주차 가격</span>
+                <span class="arrow"></span>
+            </div>
+        </div>
+        <div class="main">
+    
+        </div>
+    </div>
+
+    <script src="parking.js"></script>
+    <script>
+        const arr2 = arr.slice(0, 300)
+        console.log(arr2)
+        function load() {
+            const main = document.querySelector('div.main')
+            arr2.forEach(e => {
+                let tag = ''
+                tag += `<div class="item">`
+                tag += `    <div class="guNm">${e.guNm}</div>`
+                tag += `    <div class="pkNam">${e.pkNam}</div>`
+                tag += `    <div class="pkFm">${e.pkFm}</div>`
+                tag += `    <div class="pkCnt">${e.pkCnt}</div>`
+                tag += `    <div class="tenMin">${e.tenMin}</div>`
+                tag += `    <div class="ftDay">${e.ftDay}</div>`
+                tag += `    <div class="ftMon">${e.ftMon}</div>`
+                tag += `</div>`
+                main.innerHTML += tag
+            });
+        }
+        window.addEventListener('DOMContentLoaded', load)
+
+    </script>
+    
+</body>
+</html>

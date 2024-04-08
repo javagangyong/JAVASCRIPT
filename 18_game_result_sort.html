@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #root, .columns {
+            max-width: 1200px;
+            margin: auto;
+        }
+        body > p {
+            max-width: 1200px;
+            margin: 20px auto;
+        }
+        .columns {
+            background-color: #eee;
+        }
+        .item {
+            display: flex;
+        }
+        .item > div {
+            border: 1px solid black;
+            flex: 1;
+            padding: 5px 10px;
+        }
+        .item > div:nth-child(1) {
+            flex: 2;
+        }
+    </style>
+</head>
+<body>
+
+    <p id="sort">
+        <button id="kill-desc">킬 높은 순</button>
+        <button id="kill-asc">킬 낮은 순</button>
+        <button id="death-desc">데스 높은 순</button>
+        <button id="death-asc">데스 낮은 순</button>
+        <button id="assist-desc">어시 높은 순</button>
+        <button id="assist-asc">어시 낮은 순</button>
+        <button id="damage-desc">데미지 높은 순</button>
+        <button id="damage-asc">데미지 낮은 순</button>
+        <button id="cs-desc">cs 높은 순</button>
+        <button id="cs-asc">cs 낮은 순</button>
+    </p>
+    
+    <div class="columns item">
+        <div>name</div>
+        <div>champion</div>
+        <div>team</div>
+        <div>kill</div>
+        <div>death</div>
+        <div>assist</div>
+        <div>damage</div>
+        <div>cs</div>
+    </div>
+    <div id="root"></div>
+
+    <script src="opgg_result.js"></script>
+    <script>
+        console.log(arr)
+
+        const root = document.getElementById('root')
+
+        function sort(event) {
+            const id = event.target.id
+            const column = id.split('-')[0]
+            const order = id.split('-')[1]
+            console.log(column, order)
+
+            const arr2 = Array.from(document.querySelectorAll('#root > .item'))
+            arr2.sort((e1, e2) => {
+                const v1 = +e1.querySelector('.' + column).innerText
+                const v2 = +e2.querySelector('.' + column).innerText
+                return v1 - v2 > 0 ? 1 : -1
+            })
+            if(order == 'desc') {
+                arr2.reverse()
+            }
+            arr2.forEach(e => root.appendChild(e))
+        }
+        const btnList = document.querySelectorAll('#sort > button')
+        btnList.forEach(btn => btn.onclick = sort)
+
+        function load() {
+            arr.forEach(dto => {
+                let tag = ''
+                tag += `<div class="item">`
+                tag += `    <div class="user">${dto.user}</div>`
+                tag += `    <div class="champion">${dto.champion}</div>`
+                tag += `    <div class="team">${dto.team}</div>`
+                tag += `    <div class="kill">${dto.kill}</div>`
+                tag += `    <div class="death">${dto.death}</div>`
+                tag += `    <div class="assist">${dto.assist}</div>`
+                tag += `    <div class="damage">${dto.damage}</div>`
+                tag += `    <div class="cs">${dto.cs}</div>`
+                tag += `</div>`
+                root.innerHTML += tag
+            });
+        }
+
+        window.addEventListener('DOMContentLoaded', load)
+    </script>
+</body>
+</html>

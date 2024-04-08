@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>23_filter.html</title>
+    <style>
+        #root {
+            width: 900px;
+            margin: auto;
+            display: flex;
+        }
+        .left {
+            width: 150px;
+            display: flex;
+            flex-direction: column;
+        }
+        .right {
+            overflow-y: auto;
+            overflow-x: hidden;
+            height: 80vh;   /* viewHeight : 보여지는 높이 (브라우저 창 기준)*/
+        }
+        .item {
+            display: flex;
+        }
+        .item > div {
+            border: 1px solid black;
+            flex: 1;
+            padding: 5px 10px;
+        }
+        .item > div:nth-child(1){
+            flex: 4;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>과일 상품 가격대별 필터</h1>
+    <hr>
+
+    <div id="root">
+        <div class="left">
+            <label><input type="checkbox" name="p0">10000원 미만</label>
+            <label><input type="checkbox" name="p1">10000원 ~</label>
+            <label><input type="checkbox" name="p2">20000원 ~</label>
+            <label><input type="checkbox" name="p3">30000원 ~</label>
+            <label><input type="checkbox" name="p4">40000원 ~</label>
+            <label><input type="checkbox" name="p5">50000원 ~</label>
+        </div>
+        <div class="right"></div>
+    </div>
+
+    <script src="homeplus(berry).js"></script>
+    <script>
+        const root = document.querySelector('div.right')
+        // JSON 데이터를 화면에 반영하는 함수
+        function load() {
+            arr.forEach(dto => {
+                let tag = ''
+                tag += `<div class="item">`
+                tag += `    <div class="name">${dto.name}</div>`
+                tag += `    <div class="price">${dto.price}</div>`
+                tag += `    <div class="grade">${dto.grade}</div>`
+                tag += `</div>`
+                root.innerHTML += tag
+            })
+        }
+        window.onload = load
+        
+        const boxList = document.querySelectorAll('div.left > label > input[type="checkbox"]')
+        function filterHandler(event){
+            const checkedArray = Array.from(boxList).filter(e => e.checked)
+                                    .map(e => +e.name.replace('p', ''))
+            console.log(checkedArray)
+
+            const itemList = document.querySelectorAll('div.right > div.item')
+            console.log(itemList)
+
+            if(checkedArray.length == 0){
+                itemList.forEach(e => e.classList.remove('hidden'))
+                return 
+            }
+
+            itemList.forEach(item => {
+                const price0 = +item.querySelector('div.price').innerText
+                const price = Math.floor(price0 / 10000)
+                if(checkedArray.includes(price))
+                    item.classList.remove('hidden')
+                else   
+                    item.classList.add('hidden')
+            })
+        }
+        boxList.forEach(box => box.onclick = filterHandler)
+        
+    </script>
+    
+</body>
+</html>
