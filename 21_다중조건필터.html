@@ -85,7 +85,7 @@
         const boxList = document.querySelectorAll('div.left > label > input[type="checkbox"]')
 
         function filterHandler(event){
-            // 배열에서 원하는 속성만 가져오거나, 별도의 속성을 추가해서 가져올때 Array.map() 사용
+            // 배열에서 원하는 속성만 가져오거나, 별도의 속성을 추가해서 가져올때 Array.map() 사용 
             const checkedArray = Array.from(boxList).filter(e => e.checked)
                                         .map(e => +e.name.replace('a', ''))
 
